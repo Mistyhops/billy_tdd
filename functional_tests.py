@@ -1,22 +1,41 @@
+import unittest
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
-google_driver_path = "/driver/chromedriver"
 
-service = Service(executable_path=google_driver_path)
-options = webdriver.ChromeOptions()
-options.add_argument("--headless")
+class NewVisitorTest(unittest.TestCase):
+    """Тест нового посетителя"""
 
-browser = webdriver.Chrome(
-    options=options,
-    service=service,
-)
-browser.get('http://localhost:8000')
+    def setUp(self) -> None:
+        """Установка"""
+        google_driver_path = "/home/galkin/projects/tests_book/driver/chromedriver"
+        service = Service(executable_path=google_driver_path)
+        options = webdriver.ChromeOptions()
+        options.add_argument("--headless")
+        self.browser = webdriver.Chrome(
+            options=options,
+            service=service,
+        )
 
-print(1)
-print(f"{browser.title=}")
-assert 'Django' in browser.title
+    def tearDown(self) -> None:
+        """Демонтаж"""
+        self.browser.quit()
 
-print(2)
+    def test_can_start_a_list_and_retrieve_it_later(self):
+        """Тест: можно начать список и получить его позже"""
+        # Эдит слышала про крутое новое онлайн-приложение со
+        # списком неотложных дел. Она решает оценить его
+        # домашнюю страницу
+        self.browser.get('http://localhost:8000')
 
-browser.quit()
+        # Она видит, что заголовок и шапка страницы говорят о
+        # списках неотложных дел
+        self.assertIn('To-Do', self.browser.title)
+        self.fail('Закончить тест!')
+
+        # Ей сразу же предлагается ввести элемент списка
+
+
+if __name__ == '__main__':
+    unittest.main(warnings='ignore')
