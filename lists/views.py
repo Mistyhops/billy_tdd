@@ -10,13 +10,14 @@ def home_page(request: WSGIRequest):
     if request.method == 'POST':
         new_item_text = request.POST['item_text']
         Item.objects.create(text=new_item_text)
-        return redirect('/')
-
-    items = Item.objects.all()
+        return redirect('/lists/the-only-one-list/')
     return render(
         request,
         'home.html',
-        {
-            'items': items
-        }
     )
+
+
+def view_list(request: WSGIRequest):
+    """Представление списка"""
+    items = Item.objects.all()
+    return render(request, 'list.html', {'items': items})
