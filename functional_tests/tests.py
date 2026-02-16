@@ -11,7 +11,7 @@ from selenium.webdriver.common.by import By
 
 class NewVisitorTest(StaticLiveServerTestCase):
     """Тест нового посетителя"""
-    MAX_WAIT = 10
+    MAX_WAIT = 2
 
     def setUp(self) -> None:
         """Установка"""

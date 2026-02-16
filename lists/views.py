@@ -2,7 +2,7 @@ from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
-from lists.models import Item
+from lists.models import Item, List
 
 
 def home_page(request: WSGIRequest):
@@ -21,5 +21,6 @@ def view_list(request: WSGIRequest):
 
 def new_list(request: WSGIRequest):
     """Новый список"""
-    Item.objects.create(text=request.POST['item_text'])
+    list_ = List.objects.create()
+    Item.objects.create(text=request.POST['item_text'], list=list_)
     return redirect('/lists/the-only-one-list/')
