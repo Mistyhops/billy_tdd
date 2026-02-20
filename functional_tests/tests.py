@@ -1,3 +1,4 @@
+import os
 import time
 import unittest
 
@@ -23,6 +24,10 @@ class NewVisitorTest(StaticLiveServerTestCase):
             options=options,
             service=service,
         )
+
+        staging_server = os.environ.get('STAGING_SERVER')
+        if staging_server:
+            self.live_server_url = 'http://' + staging_server
 
     def tearDown(self) -> None:
         """Демонтаж"""
